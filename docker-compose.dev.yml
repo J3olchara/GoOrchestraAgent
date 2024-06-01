@@ -1,0 +1,22 @@
+services:
+  agent:
+    env_file:
+      - path: env/dev.agent.env
+        required: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      go run ./app/main/main.go
+    hostname: "localhost"
+    ports:
+      - "8081:8081"
+    network_mode: "host"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+#    volumes:
+#      - .:/app
+#    restart: always
